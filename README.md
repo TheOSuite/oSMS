@@ -1,77 +1,109 @@
-# Security Misconfiguration Scanner
+# 🛡️ oSMS – Open Security Misconfiguration Scanner
 
-**Beginner-friendly Python tool with a graphical user interface (GUI) built using Tkinter. It helps identify OWASP A05:2021 – Security Misconfiguration issues in web applications.**
+![Python](https://img.shields.io/badge/Python-3.8%2B-blue)
+![License](https://img.shields.io/github/license/TheOSuite/oSMS)
+![Build](https://img.shields.io/badge/Build-Passing-brightgreen)
 
-## Overview
+> **Beginner-friendly Python GUI tool to detect Security Misconfiguration issues in web applications.**
 
-This scanner is designed for beginners and provides a simple way to check for common security misconfigurations in web applications. It leverages a user-friendly GUI built with Tkinter, making it accessible to those without extensive command-line experience.
+---
 
-The scanner performs tests for:
+##  Overview
 
-*   **Default credentials:** Probing for common default usernames and passwords.
-*   **XML External Entities (XXE):** Checking for XXE vulnerabilities with basic XML payload injection.
-*   **Open ports and exposed services:** Identifying open network ports and potentially exposed services.
-*   **Misconfigured Amazon S3 buckets:** Checking for common S3 bucket misconfigurations.
-*   **Tech stack exposure through HTTP headers:** Analyzing HTTP headers for information leakage about the server and technologies used.
-*   **Web Application Firewall (WAF) or CDN detection:** Attempting to identify the presence of WAFs or CDNs.
-*   **Missing or misconfigured security headers:** Checking for important security headers like `Content-Security-Policy`, `X-Content-Type-Options`, etc.
-*   **CAPTCHA and bot protection detection:** Identifying the presence of CAPTCHA or other bot protection mechanisms.
+`oSMS` is a lightweight vulnerability scanner that helps you detect **security misconfigurations** in web applications. Built for ease of use, it features a fully graphical interface and a suite of common web checks. Ideal for **bug bounty beginners**, **CTF learners**, or **pentesters** who want a quick recon tool.
 
-## Features
+---
 
-*   **User-friendly interface:** Intuitive GUI built with Tkinter (no command-line knowledge required).
-*   **Default credential testing:** Probes for common default credentials via login form analysis.
-*   **Basic open port and service scan:** Uses sockets to perform a basic scan for open ports and services.
-*   **XXE vulnerability test:** Includes a basic test for XXE vulnerabilities using XML payload injection.
-*   **S3 bucket misconfiguration check:** Checks for common S3 bucket misconfigurations.
-*   **Server fingerprinting:** Identifies server and technology information via HTTP headers.
-*   **WAF/CDN detection:** Attempts to detect the presence of WAFs or CDNs.
-*   **CAPTCHA and bot protection identification:** Identifies the presence of CAPTCHA or other bot protection mechanisms.
-*   **Stop scan button:** Allows cancellation of an in-progress scan.
-*   **Visual dashboard:** Provides a progress bar and color-coded output for scan status.
-*   **Export results:** Generates an HTML report of the scan results.
-*   **Logging:** Saves detailed logs to a plain text file (`scan_log.txt`).
+##  What It Scans For
 
-## Getting Started
+|  Test                       |  Description                                                              |
+|------------------------------|-----------------------------------------------------------------------------|
+| **HTTP Headers**             | Checks for missing security headers (`CSP`, `HSTS`, etc.)                  |
+| **Directory Listing**        | Detects exposed directory indices                                          |
+| **Error Messages**           | Looks for verbose backend error messages                                   |
+| **Tech Stack Exposure**      | Reveals frameworks/languages from headers or HTML                          |
+| **Default Credentials**      | Brute-force basic login pages with known creds                             |
+| **XXE Injection**            | Attempts to exploit XML External Entity issues                             |
+| **Open Ports**               | Scans common TCP ports via raw sockets                                     |
+| **S3 Bucket Misconfigs**     | Checks for public S3 buckets                                               |
+| **WAF/CDN Detection**        | Identifies Cloudflare, Akamai, etc.                                        |
+| **CORS Misconfig**           | Flags wildcard or insecure `Access-Control-Allow-Origin` headers           |
+| **Insecure Cookies**         | Finds cookies missing `Secure` or `HttpOnly` flags                         |
+| **Outdated Server Software** | Flags versions of Apache/nginx/IIS that are likely vulnerable              |
+| **HTTP Methods**             | Detects unsafe HTTP methods like `TRACE`                                   |
+
+---
+
+## 🖥️ GUI Features
+
+-  **Tkinter GUI** – no terminal required
+-  **Progress Bar** – visual scan feedback
+-  **Color-coded log viewer**
+-  **Stop scan button**
+-  **Custom test selection**
+-  **Export results as `.html`, `.pdf`, or `.txt`**
+-  **Configurable ports, creds, timeouts, and rate limits**
+
+---
+
+##  Getting Started
 
 ### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/TheOSuite/oSMS.git
-cd oSMS 
-```
+cd oSMS
+````
 
 ### 2. Install Dependencies
-
-Make sure you are using **Python 3.8 or newer**.
 
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Run the Application
+> ✅ Python 3.8 or later is required.
+
+### 3. Run the Tool
 
 ```bash
 python oSMS.py
 ```
 
-## How to Use
+---
 
-1.  Launch the script to open the GUI.
-2.  Enter the target domain or IP address in the input field.
-3.  Click the "Start Scan" button to begin scanning.
-4.  Monitor the scan progress through the dashboard.
-5.  Click "Export Report" to save the results as an HTML file.
-6.  Review detailed logs in `scan_log.txt` for more information.
+## Configuration
 
-## Legal Disclaimer
+Accessible via the **"Config"** button in the GUI.
 
-**This tool is intended for educational use and authorized testing only. Do not use it to scan targets without explicit permission from the owner. Unauthorized scanning is illegal and unethical. The developer is not responsible for any misuse of this tool.**
+* Custom scan **ports**: `21,22,80,443,...`
+* Custom **credentials**: `admin:admin,user:password,...`
+* **Rate limit**: seconds between requests
+* **Timeout**: request timeout in seconds
 
-## Roadmap
+Saves to `osms_config.json`.
 
-*   Add command-line interface (CLI) mode for scripting and automation.
-*   Implement email report delivery functionality.
-*   Add support for authenticated scans (e.g., login to a web application).
-*   Develop a plugin system for modular scanning capabilities.
-```
+---
+
+## Output
+
+* `scan_log_YYYYMMDD_HHMMSS.txt`: detailed log of scan
+* `report.html`: color-coded, browser-viewable report
+* `report.pdf`: printable version of scan results
+
+---
+
+## 🛑 Legal Disclaimer
+
+This tool is for **authorized testing and educational purposes only**.
+**Do not scan websites you don’t own or have explicit permission to test.**
+
+> ⚠️ Unauthorized scanning is illegal. The developer assumes no liability for misuse.
+
+---
+
+## Credits
+
+Created by **The O Suite** https://www.TheOSuite.com
+Contributions, forks, and stars are always welcome 
+
+---
